@@ -14,7 +14,6 @@ class Calculator(QMainWindow):
 
     def UI(self):
         ##########Entry Field##########
-
         self.entry_box = QLineEdit(self)
         self.entry_box.resize(335,30)
         self.entry_box.setAlignment(Qt.AlignRight) # LineEdit yazısını sağ taraftan başlattık
@@ -22,8 +21,8 @@ class Calculator(QMainWindow):
                                      "border-radius: 5px; background-color: #e6e6fa;")
         self.entry_box.setText("0")
         self.entry_box.move(20,30)
-
         ##########Number Buttons##########
+
         btn_number = []
         for i in range(1,10):
             i = QPushButton(str(i), self)
@@ -35,10 +34,22 @@ class Calculator(QMainWindow):
         btn_index = 0
         for i in range(0,3):
             for j in range(0,3):
-                btn_number[btn_index].move(25+j*90, 70+i*90)
+                btn_number[btn_index].move(25+j*90, 70+i*70)
                 btn_index += 1
-
-
+        ##########Operator Buttons##########
+        btn_operator = []
+        for i in range(4):
+            i = QPushButton(self)
+            i.resize(70, 40)
+            i.setFont(QFont("Arial", 15))
+            i.setStyleSheet("background-color: white")
+            btn_operator.append(i)
+        btn_operator[0].setText("+")
+        btn_operator[1].setText("-")
+        btn_operator[2].setText("*")
+        btn_operator[3].setText("/")
+        for i in range(4):
+            btn_operator[i].move(290, 70+i*70)
 
 
 
