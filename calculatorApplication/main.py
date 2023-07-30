@@ -3,6 +3,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 
+result = 0
+result_list = []
+
 class Calculator(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -62,30 +65,42 @@ class Calculator(QMainWindow):
         btn_zero.resize(250, 40)
         btn_zero.move(25,280)
 
+        #################################
         btn_clear = QPushButton("C", self)
+        btn_clear.clicked.connect(self.funcClear)
         btn_clear.setStyleSheet("background-color: white")
         btn_clear.setFont(QFont("Arial", 20))
         btn_clear.resize(70, 40)
         btn_clear.move(25, 340)
 
+        #################################
         btn_dot = QPushButton(".", self)
+        btn_dot.clicked.connect(self.enterNumbers)
         btn_dot.setStyleSheet("background-color: white")
         btn_dot.setFont(QFont("Arial", 15))
         btn_dot.resize(70, 40)
         btn_dot.move(110, 340)
 
+        #################################
         btn_equal = QPushButton("=", self)
+        btn_equal.clicked.connect(self.funcOperator)
         btn_equal.setStyleSheet("background-color: white")
         btn_equal.setFont(QFont("Arial", 15))
         btn_equal.resize(70, 40)
         btn_equal.move(200, 340)
 
+        #################################
         btn_delete = QPushButton(self)
+        btn_delete.clicked.connect(self.funcDelete)
         btn_delete.setIcon(QIcon('icons/arrow.png'))
         btn_delete.setStyleSheet("background-color: white")
         btn_delete.setFont(QFont("Arial", 15))
         btn_delete.resize(70, 40)
         btn_delete.move(290, 340)
+
+        ##########Status Bar##########
+        self.status_bar = QStatusBar()
+        self.setStatusBar(self.status_bar)
 
     def enterNumbers(self):
         btn_text = self.sender().text()
@@ -100,8 +115,24 @@ class Calculator(QMainWindow):
         if self.entry_box.text() != "O":
             self.entry_box.setText(self.entry_box.text()+btn_text)
 
+    def funcClear(self):
+        self.entry_box.setText("O")
+    def funcDelete(self):
+        x = self.entry_box.text()
+        x=x[:-1]
+        self.entry_box.setText(x)
+        if len(x) == 0:
+            self.entry_box.setText("O")
 
+    def funcOperator(self):
+        content = self.entry_box.text()
+        result = eval(content)
+        self.entry_box.setText(str(result))
 
+        result_list.append(content)
+        result_list.reverse()
+        self.status_bar.showMessage('Geçmiş İşlemler: '+'|'.join(result_list[:5]))
+        self.status_bar.setFont(QFont("Verdana", 15))
 
 def main():
     App = QApplication(sys.argv)
