@@ -19,7 +19,7 @@ class Calculator(QMainWindow):
         self.entry_box.setAlignment(Qt.AlignRight) # LineEdit yazısını sağ taraftan başlattık
         self.entry_box.setStyleSheet("font: 14pt Arial Bold; border: 3px solid gray;"
                                      "border-radius: 5px; background-color: #e6e6fa;")
-        self.entry_box.setText("0")
+        self.entry_box.setText("O")
         self.entry_box.move(20,30)
 
         ##########Number Buttons##########
@@ -29,6 +29,7 @@ class Calculator(QMainWindow):
             i.setFont(QFont("Arial", 15))
             i.resize(70,40)
             i.setStyleSheet("background-color: white")
+            i.clicked.connect(self.enterNumbers)
             btn_number.append(i)
 
         btn_index = 0
@@ -44,6 +45,7 @@ class Calculator(QMainWindow):
             i.resize(70, 40)
             i.setFont(QFont("Arial", 15))
             i.setStyleSheet("background-color: white")
+            i.clicked.connect(self.enterOperator)
             btn_operator.append(i)
         btn_operator[0].setText("+")
         btn_operator[1].setText("-")
@@ -54,6 +56,7 @@ class Calculator(QMainWindow):
 
         ##########Other Buttons##########
         btn_zero = QPushButton("0", self)
+        btn_zero.clicked.connect(self.enterNumbers)
         btn_zero.setStyleSheet("background-color: white")
         btn_zero.setFont(QFont("Arial", 20))
         btn_zero.resize(250, 40)
@@ -83,6 +86,21 @@ class Calculator(QMainWindow):
         btn_delete.setFont(QFont("Arial", 15))
         btn_delete.resize(70, 40)
         btn_delete.move(290, 340)
+
+    def enterNumbers(self):
+        btn_text = self.sender().text()
+        if self.entry_box.text() == "O":
+            self.entry_box.setText("")
+            self.entry_box.setText(btn_text)
+        else:
+            self.entry_box.setText(self.entry_box.text()+btn_text)
+
+    def enterOperator(self):
+        btn_text = self.sender().text()
+        if self.entry_box.text() != "O":
+            self.entry_box.setText(self.entry_box.text()+btn_text)
+
+
 
 
 def main():
