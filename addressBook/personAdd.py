@@ -51,8 +51,6 @@ class Add(QWidget):
 
         #########################################################
 
-        self.show()
-
     def add(self):
         name = self.name.text()
         lastname = self.lastname.text()
