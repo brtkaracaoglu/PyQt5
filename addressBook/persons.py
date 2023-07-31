@@ -1,10 +1,13 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont,QPixmap
+import sqlite3
 
 butonFont = QFont("Arial", 12)
 textFont = QFont("Arial", 16)
 
+connect = sqlite3.connect("database.db")
+cursor = connect.cursor()
 
 class Person(QWidget):
     def __init__(self):
@@ -21,6 +24,9 @@ class Person(QWidget):
         #########################################################
         self.list = QListWidget(self)
         self.list.move(110,100)
+        person = cursor.execute("select * from persons")
+        for i in person.fetchall():
+            self.list.addItem(str(i[0])+ "-" +i[1]+ " " +i[2])
 
         #########################################################
         self.addButon = QPushButton("Ekle", self)
