@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont,QPixmap
 import sqlite3
+import personAdd
 
 butonFont = QFont("Arial", 12)
 textFont = QFont("Arial", 16)
@@ -32,6 +33,7 @@ class Person(QWidget):
         self.addButon = QPushButton("Ekle", self)
         self.addButon.setFont(butonFont)
         self.addButon.move(380,100)
+        self.addButon.clicked.connect(self.personAdd)
 
         #########################################################
         self.updateButon = QPushButton("Güncelle", self)
@@ -50,3 +52,9 @@ class Person(QWidget):
 
         #########################################################
 
+        self.show()
+
+    def personAdd(self):
+        self.add = personAdd.Add()
+        self.add.show()
+        self.close()
