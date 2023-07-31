@@ -49,6 +49,7 @@ class Person(QWidget):
         self.deleteButon = QPushButton("Sil", self)
         self.deleteButon.setFont(butonFont)
         self.deleteButon.move(380, 220)
+        self.deleteButon.clicked.connect(self.personDelete)
 
         #########################################################
 
@@ -58,3 +59,20 @@ class Person(QWidget):
         self.add = personAdd.Add()
         self.add.show()
         self.close()
+
+    def personDelete(self):
+         self.person = self.list.currentItem().text()
+         id = self.person.split("-")[0]
+         self.approval = QMessageBox.question(self, "Uyarı", "Silmek istiyormusunuz ?", QMessageBox.Yes
+                                              | QMessageBox.No, QMessageBox.No)
+         if (self.approval == QMessageBox.Yes):
+             try:
+                 cursor.execute("delete from persons where person_id = ? ",(id,))
+                 connect.commit()
+                 QMessageBox.information(self, "Bilgi", "Kayıt Silindi...")
+             except:
+                 QMessageBox.information(self, "Hata", "Kayıt Silinemedi...")
+
+             self.close()
+
+
