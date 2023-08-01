@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont,QIcon
-import persons
+import persons, personAdd
 
 butonFont = QFont("Arial", 12)
 textFont = QFont("Arial", 16)
@@ -32,6 +32,7 @@ class Window(QWidget):
         self.addButon.move(150, 100)
         self.addButon.setFont(butonFont)
         self.addButon.setIcon(QIcon("icons/add.png"))
+        self.addButon.clicked.connect(self.personAdd)
 
         #########################################################
         self.aboutButon = QPushButton("Hakkında", self)
@@ -48,6 +49,10 @@ class Window(QWidget):
     def persons(self):
         self.person = persons.Person()
         self.person.show()
+
+    def personAdd(self):
+        self.add = personAdd.Add()
+        self.add.show()
 
 def main():
     app = QApplication(sys.argv)
